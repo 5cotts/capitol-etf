@@ -20,7 +20,7 @@ function politiciansTable(pidToNameMap) {
 				  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 				>
 				  <TableCell component="th" scope="row">
-					<a href={`${process.env.REACT_APP_BACKEND_API_URL}/by-pid/${pid}`}>{name}</a>
+					<a href={`/trades/${pid}`}>{name}</a>
 				  </TableCell>
 				</TableRow>
 			  ))}
@@ -36,12 +36,12 @@ function Politicians() {
     const [items, setItems] = useState([]);
 
     useEffect(() => {    
-		fetch(`${process.env.REACT_APP_BACKEND_API_URL}/get-pids`)
+		fetch(`${process.env.REACT_APP_HILLTRADES_API_URL}/get-pids`)
 			.then(res => res.json())
 			.then(
-			(result) => {
-				setIsLoaded(true);
-				setItems(result);
+				(result) => {
+					setIsLoaded(true);
+					setItems(result);
 			},
 			(error) => {
 				setIsLoaded(true);
