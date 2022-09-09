@@ -6,6 +6,7 @@ import {
 	TableCell,
 	TableContainer,
 	TableRow,
+  TableHead,
 	Paper,
 } from '@material-ui/core';
 
@@ -14,18 +15,41 @@ function tradesTable(trades) {
 	return (
 		<TableContainer component={Paper}>
 		  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-			<TableBody>
-			  {trades.map((trade) => (
-				<TableRow
-				  key={trade._txId}
-				  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-				>
-				  <TableCell component="th" scope="row">
-					{JSON.stringify(trade)}
-				  </TableCell>
-				</TableRow>
-			  ))}
-			</TableBody>
+        <TableHead>
+          <TableRow>
+            <TableCell>Politician</TableCell>
+            <TableCell>Traded Issuer</TableCell>
+            <TableCell>Filing Date</TableCell>
+            <TableCell>Trade Date</TableCell>
+            <TableCell>Owner</TableCell>
+            <TableCell>Transaction Type</TableCell>
+            <TableCell>Asset Type</TableCell>
+            <TableCell>Size</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {trades.map((trade) => (
+            <TableRow
+              key={trade._txId}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">{`${trade.politician.firstName} ${trade.politician.lastName}`}</TableCell>
+              <TableCell>
+                <a href={trade.filingURL}>{`${trade.issuer.issuerName} (${trade.issuer.issuerTicker})`}</a>
+              </TableCell>
+              <TableCell>{trade.filingDate}</TableCell>
+              <TableCell>{trade.txDate}</TableCell>
+              <TableCell>{trade.owner}</TableCell>
+              <TableCell>{trade.txType}</TableCell>
+              <TableCell>
+                {trade.asset.assetType === "stock-options" ? trade.asset.instrument : "Stock"}
+              </TableCell>
+              <TableCell>
+                ${trade.asset.assetType === "stock-options" ?  trade.value : `${Math.floor(trade.price * trade.size)}`}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
 		  </Table>
 		</TableContainer>
 	);
