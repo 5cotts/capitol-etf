@@ -1,2 +1,5 @@
 # Specific directories
 /fdr/pdf
+
+# Env vars
+.env
